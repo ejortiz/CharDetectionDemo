@@ -24,8 +24,8 @@ def convert_to_grayscale(img):
 
 
 desired_output_size = (200, 200)
-cyrillic_features = pd.read_csv("data/cyrillic/cyrillic_data/cyrillic_data.csv", header=None)
-cyrillic_targets = pd.read_csv("data/cyrillic/cyrillic_label/cyrillic_label.csv", header=None)
+# cyrillic_features = pd.read_csv("data/cyrillic/cyrillic_data/cyrillic_data.csv", header=None)
+# cyrillic_targets = pd.read_csv("data/cyrillic/cyrillic_label/cyrillic_label.csv", header=None)
 img = cv2.imread("data/cyrillic/images/images/Cyrillic/Cyrillic/I/58b1d04f8aa15.png", cv2.IMREAD_UNCHANGED)
 
 converted_img = convert_to_grayscale(img)
