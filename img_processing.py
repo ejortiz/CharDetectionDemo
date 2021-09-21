@@ -13,8 +13,10 @@ alpha_channel = img[:, :, 3]
 _, mask = cv2.threshold(alpha_channel, 254, 255, cv2.THRESH_BINARY)  # binarize mask
 color = img[:, :, :3]
 new_img = cv2.bitwise_not(cv2.bitwise_not(color, mask=mask))
-new_img = cv2.resize(new_img, dsize=(200, 200,), interpolation= cv2.INTER_CUBIC)
+new_img = cv2.resize(new_img[:, :], dsize=(200, 200), interpolation= cv2.INTER_CUBIC)
 # Window name in which image is displayed
+new_img = new_img[:, :, 0]
+
 window_name = 'image'
 
 # Using cv2.imshow() method
