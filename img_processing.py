@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import cv2
 import os
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+
 
 
 def show_img(img, window_name="window"):
@@ -56,5 +58,19 @@ def create_mega_csv():
     combined_df.to_csv('cyrillic_features.csv')
 
 
-create_mega_csv()
+def create_scaled_csv():
+
+    df = pd.read_csv("cyrillic_features.csv", index_col="Unnamed: 0")
+    scaler = StandardScaler()
+    encoder = LabelEncoder()
+    df = df.drop(columns=["Unnamed: 0.1"])
+    df.iloc[:, -1] = encoder.fit_transform(df.iloc[:, -1])
+    scaler.fit(df.iloc[:, :-1])
+    df.iloc[:, :-1] = scaler.transform(df.iloc[:, :-1])
+    print(df.head())
+    df.to_csv("scaled_cyrillic.csv")
+
+
+create_scaled_csv()
+# create_mega_csv()
 # show_img(converted_img, "cyrillic letter")
