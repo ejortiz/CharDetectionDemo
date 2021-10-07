@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split, cross_val_score, learning_
 from experiment_wrapper import Experiment
 from data_prepper import Cyrillic
 import pickle
+from sklearn.metrics import classification_report
 import time
 
 data_wrappers = [Cyrillic()]
@@ -54,11 +55,14 @@ for i in range(0, len(data_wrappers)):
     #                                data_wrapper.data_name + " optimal params", save_img=True)
 
     clf = SVC(**param_kv, random_state=42)
-    cv_scores = cross_val_score(clf, experiment.X, experiment.y, cv=5, n_jobs=-1)
+    cv_scores = cross_val_score(clf, experiment.X_train, experiment.y_train, cv=5, n_jobs=-1)
     print("Average 5-Fold CV Score for " + experiment.classifier.__class__.__name__ + " ("
           + data_wrapper.data_name + ") : {}".format(np.mean(cv_scores)))
 
     clf = SVC(C=1.9, gamma=16, kernel='rbf')
     clf.fit(experiment.X_train, experiment.y_train)
-    filename = 'finalized_model.sav'
+    y_pred = clf.predict(experiment.X_test)
+    print(classification_report(y_true=experiment.y_test, y_pred=y_pred))
+
+    filename = 'SVC.sav'
     pickle.dump(clf, open(filename, 'wb'))
