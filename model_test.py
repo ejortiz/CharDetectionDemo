@@ -7,7 +7,7 @@ pca = pickle.load(open("pca_cyrillic.sav", 'rb'))
 scaler = pickle.load(open("scaler_cyrillic.sav", 'rb'))
 
 desired_output_size = (50, 50)
-img = cv2.imread("9_0.png", cv2.IMREAD_UNCHANGED)
+img = cv2.imread("SHA_UPPER.png", cv2.IMREAD_UNCHANGED)
 
 converted_img = img[:, :, 0]
 converted_img = cv2.resize(converted_img[:, :], dsize=desired_output_size, interpolation=cv2.INTER_CUBIC)
