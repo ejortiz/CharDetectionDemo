@@ -7,24 +7,24 @@ import numpy as np
 from experiment_wrapper import Experiment
 from data_prepper import Cyrillic
 import time
+import itertools
 
 data_wrappers = [Cyrillic()]
 
-# layer_sizes = [x for x in itertools.product(range(1, 10), repeat=3)]
+layer_sizes = [x for x in itertools.product(range(1, 10), repeat=3)]
 
 # ------ CAUTION: Gridsearch takes a long time!
-# optimal_params = [
-# {'hidden_layer_sizes': layer_sizes},
-# {'hidden_layer_sizes': layer_sizes},
-# ]
-# counter = 0
-# for d in data_wrappers:
-#     experiment = Experiment(d, MLPClassifier(random_state=42))
-#     print(d.data_name)
-#     param_dict = optimal_params[counter]
-#     experiment.search_optimal_params("RandomGridSearchCV", param_dict)
-#
-#     counter += 1
+optimal_params = [
+{'hidden_layer_sizes': layer_sizes},
+]
+counter = 0
+for d in data_wrappers:
+    experiment = Experiment(d, MLPClassifier(random_state=42))
+    print(d.data_name)
+    param_dict = optimal_params[counter]
+    experiment.search_optimal_params("RandomGridSearchCV", param_dict)
+
+    counter += 1
 
 # --------Validation chart for layer_size
 # layer_sizes = []
@@ -49,17 +49,17 @@ data_wrappers = [Cyrillic()]
 #                                         + param_name + " hyperparam\n" + d.data_name + " " + str(end_time))
 #
 # # --------Validation chart for node amounts per layer
-layer_sizes = [(500,)
-               ]
-for d in data_wrappers:
-    param_range = layer_sizes
-    param_name = "hidden_layer_sizes"
-    experiment = Experiment(d, MLPClassifier(), test_size=.25)
-    time_start = time.time()
-    experiment.validation_curve(param_range, param_name, save_img=False, hidden_layer_size='nodes')
-    end_time = time.time() - time_start
-    print('Plot hyperparam time: ' + experiment.classifier.__class__.__name__ + " "
-          + param_name + " hyperparam\n" + d.data_name + " " + str(end_time))
+# layer_sizes = [(10,), (10,)
+#                ]
+# for d in data_wrappers:
+#     param_range = layer_sizes
+#     param_name = "hidden_layer_sizes"
+#     experiment = Experiment(d, MLPClassifier(), test_size=.25)
+#     time_start = time.time()
+#     experiment.validation_curve(param_range, param_name, save_img=False, hidden_layer_size='nodes')
+#     end_time = time.time() - time_start
+#     print('Plot hyperparam time: ' + experiment.classifier.__class__.__name__ + " "
+#           + param_name + " hyperparam\n" + d.data_name + " " + str(end_time))
 
 # --------Validation chart for activation functions
 # for d in data_wrappers:

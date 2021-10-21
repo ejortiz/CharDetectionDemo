@@ -11,6 +11,8 @@ from sklearn.metrics import classification_report
 import time
 
 data_wrappers = [Cyrillic()]
+# data_wrappers[0].load_data()
+# X, y= data_wrappers[0].get_train_test()
 # Validation Curves on rbf
 # for d in data_wrappers:
 #
@@ -54,10 +56,10 @@ for i in range(0, len(data_wrappers)):
     # experiment.plot_learning_curve("Learning Curve for " + experiment.classifier.__class__.__name__+ " " +
     #                                data_wrapper.data_name + " optimal params", save_img=True)
 
-    clf = SVC(**param_kv, random_state=42)
-    cv_scores = cross_val_score(clf, experiment.X_train, experiment.y_train, cv=5, n_jobs=-1)
-    print("Average 5-Fold CV Score for " + experiment.classifier.__class__.__name__ + " ("
-          + data_wrapper.data_name + ") : {}".format(np.mean(cv_scores)))
+    # clf = SVC(**param_kv, random_state=42)
+    # cv_scores = cross_val_score(clf, experiment.X_train, experiment.y_train, cv=5, n_jobs=-1)
+    # print("Average 5-Fold CV Score for " + experiment.classifier.__class__.__name__ + " ("
+    #       + data_wrapper.data_name + ") : {}".format(np.mean(cv_scores)))
 
     clf = SVC(C=1.9, gamma=16, kernel='rbf')
     clf.fit(experiment.X_train, experiment.y_train)

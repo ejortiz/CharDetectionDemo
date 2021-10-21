@@ -1,0 +1,5 @@
+cyrillic
+MLPClassifier
+MLPClassifier(hidden_layer_sizes=(9, 9, 8), random_state=42)
+{'hidden_layer_sizes': (9, 9, 8)}
+0.412489233419466

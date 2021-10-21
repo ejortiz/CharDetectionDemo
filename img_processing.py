@@ -5,7 +5,6 @@ import os
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 
-
 def show_img(img, window_name="window"):
     cv2.imshow(window_name, img)  # Using cv2.imshow() method
     cv2.waitKey(0)  # await key press (this is necessary to avoid Python kernel form crashing)
@@ -44,7 +43,7 @@ def create_csv_files():
 
             except FileNotFoundError:
                 continue
-        df.to_csv(str(counter) +'_.csv')
+        df.to_csv(str(counter) + '_.csv')
         counter += 1
 
 
@@ -59,7 +58,6 @@ def create_mega_csv():
 
 
 def create_scaled_csv():
-
     df = pd.read_csv("cyrillic_features.csv", index_col="Unnamed: 0")
     scaler = StandardScaler()
     encoder = LabelEncoder()
@@ -71,6 +69,48 @@ def create_scaled_csv():
     df.to_csv("scaled_cyrillic.csv")
 
 
-create_scaled_csv()
+def fix_labels_csv():
+    df = pd.read_csv('data/cyrillic_features.csv', index_col='Unnamed: 0')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\0', 'Э')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\1', 'І')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\2', 'Л')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\3', 'М')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\4', 'Н')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\5', 'Ц')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\6', 'Ю')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\7', 'Ъ')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\8', 'Ч')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\9', 'Я')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\10', 'Ь')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\11', 'Ы')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\12', 'Ш')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\13', 'Р')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\14', 'Б')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\15', 'А')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\16', 'С')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\17', 'Х')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\18', 'Е')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\19', 'Т')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\20', 'Г')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\21', 'Й')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\22', 'З')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\23', 'У')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\24', 'Ж')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\25', 'Т')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\26', 'К')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\27', 'П')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\28', 'О')
+    df = df.replace('data/cyrillic/images/images/Cyrillic/Cyrillic\\29', 'Щ')
+    scaler = StandardScaler()
+    # encoder = LabelEncoder()
+    df = df.drop(columns=["Unnamed: 0.1"])
+    # df.iloc[:, -1] = encoder.fit_transform(df.iloc[:, -1])
+    scaler.fit(df.iloc[:, :-1])
+    df.iloc[:, :-1] = scaler.transform(df.iloc[:, :-1])
+    print(df.head())
+    df.to_csv("scaled_cyrillic.csv")
+
+# fix_labels_csv()
+
 # create_mega_csv()
 # show_img(converted_img, "cyrillic letter")
